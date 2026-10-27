@@ -30,7 +30,9 @@ OUTPUT = os.path.join(ROOT, 'Output')
 # Settings taken from the original PSD files (300 dpi, so px = pt * 300 / 72)
 # ----------------------------------------------------------------------------------
 PT = 300 / 72
-FONT_NAME = os.path.join(FONTS, 'Brush Script.ttf')                      # Brush Script MT
+FONT_NAME = os.path.join(FONTS, 'Cinzel-Medium.ttf')                      # Cinzel Medium (current recipient font)
+# Previous recipient font, kept for reference (use recipient_font = Brush Script.ttf in the sheet):
+#   Brush Script MT, 30 pt single line; two lines approved at 20.6 pt / 26 pt
 FONT_CN   = os.path.join(FONTS, 'BiMoChunQiu-ChaoQingKaiShu-2.ttf')      # AaBMCQCQKS (Aa筆墨春秋超清楷书)
 FONT_EN   = os.path.join(FONTS, 'Apple Chancery.ttf')                    # Apple Chancery
 FONT_DIGIT = os.path.join(FONTS, 'FreeSerif.ttf')                        # stands in for SIL Kai digits (layout A date)
@@ -220,15 +222,17 @@ def make_certificate(row):
     if not names:
         raise ValueError('recipient_line_1 is empty')
     names = [str(n).strip() for n in names]
-    default_pt = 30 if len(names) == 1 else 26
+    # Cinzel defaults: 24 pt for one line; 20 pt over 22 pt for two lines (approved for DOB Design & Build)
+    default_pts = [24] if len(names) == 1 else [20, 22]
     sizes = []
     for i, key in enumerate(['recipient_line_1_pt', 'recipient_line_2_pt'][:len(names)]):
         v = row.get(key)
-        sizes.append(float(v) * PT if v not in (None, '') else default_pt * PT)
+        sizes.append(float(v) * PT if v not in (None, '') else default_pts[i] * PT)
     # last line sits on the template baseline; the line above sits 1.08 x (lower line's size) higher
     baselines = [NAME_BASELINE] if len(names) == 1 else [NAME_BASELINE - 1.08 * sizes[1], NAME_BASELINE]
+    name_font = os.path.join(FONTS, str(row.get('recipient_font')).strip()) if row.get('recipient_font') else FONT_NAME
     for n, s, b in zip(names, sizes, baselines):
-        m, _ = centred_line(W, H, n, FONT_NAME, s, NAME_TRACKING, b, NAME_MAX_WIDTH, warnings, 'Recipient')
+        m, _ = centred_line(W, H, n, name_font, s, NAME_TRACKING, b, NAME_MAX_WIDTH, warnings, 'Recipient')
         img = paint(img, m, BLACK)
 
     # --- Chinese description ---
@@ -269,7 +273,7 @@ def make_certificate(row):
 # Spreadsheet
 # ----------------------------------------------------------------------------------
 COLUMNS = ['layout', 'recipient_line_1', 'recipient_line_2', 'recipient_line_1_pt', 'recipient_line_2_pt',
-           'date', 'event_cn', 'event_en', 'cn_line_1', 'en_line_1', 'file_name']
+           'date', 'event_cn', 'event_en', 'cn_line_1', 'en_line_1', 'file_name', 'recipient_font']
 
 def read_rows(path):
     if path.lower().endswith('.csv'):

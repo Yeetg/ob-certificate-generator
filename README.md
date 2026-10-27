@@ -30,11 +30,12 @@ SPEC.md      full typography spec, fixed wording, approved examples and gotchas
 |---|---|
 | layout | **B** = date written into the Chinese and English text (Nestlé style). **A** = date on its own line under the signature (Durian style) |
 | recipient_line_1 / recipient_line_2 | Recipient; line 2 optional |
-| recipient_line_1_pt / recipient_line_2_pt | Optional size in pt. Defaults: 30 pt for one line, 26 pt each for two lines |
+| recipient_line_1_pt / recipient_line_2_pt | Optional size in pt. Defaults (Cinzel): 24 pt for one line; 20 pt over 22 pt for two lines |
 | date | e.g. 2026-09-12 |
 | event_cn | Chinese event line, e.g. 热心赞助捐血运动 |
 | event_en | English line(s) after "In Sincere Appreciation of Your Invaluable". `\|` forces a line break |
 | cn_line_1 / en_line_1 | Optional overrides of the fixed first lines |
 | file_name | Optional output file name, without extension |
+| recipient_font | Optional font file in `Fonts/` for this row only. Blank = Cinzel Medium. The previous font, `Brush Script.ttf`, is kept for reference |
 
 See [SPEC.md](SPEC.md) for everything else.
