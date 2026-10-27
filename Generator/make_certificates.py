@@ -30,8 +30,9 @@ OUTPUT = os.path.join(ROOT, 'Output')
 # Settings taken from the original PSD files (300 dpi, so px = pt * 300 / 72)
 # ----------------------------------------------------------------------------------
 PT = 300 / 72
-FONT_NAME = os.path.join(FONTS, 'Cinzel-Medium.ttf')                      # Cinzel Medium (current recipient font)
-# Previous recipient font, kept for reference (use recipient_font = Brush Script.ttf in the sheet):
+FONT_NAME = os.path.join(FONTS, 'Cinzel-SemiBold.ttf')                    # Cinzel SemiBold 600 (current recipient font)
+# Previous recipient fonts, kept for reference (name the file in the sheet's recipient_font column):
+#   Cinzel-Medium.ttf (weight 500), used 27 Oct 2026 before SemiBold was chosen
 #   Brush Script MT, 30 pt single line; two lines approved at 20.6 pt / 26 pt
 FONT_CN   = os.path.join(FONTS, 'BiMoChunQiu-ChaoQingKaiShu-2.ttf')      # AaBMCQCQKS (Aa筆墨春秋超清楷书)
 FONT_EN   = os.path.join(FONTS, 'Apple Chancery.ttf')                    # Apple Chancery
@@ -222,7 +223,7 @@ def make_certificate(row):
     if not names:
         raise ValueError('recipient_line_1 is empty')
     names = [str(n).strip() for n in names]
-    # Cinzel defaults: 24 pt for one line; 20 pt over 22 pt for two lines (approved for DOB Design & Build)
+    # Cinzel SemiBold defaults: 24 pt for one line; 20 pt over 22 pt for two lines (approved for DOB Design & Build)
     default_pts = [24] if len(names) == 1 else [20, 22]
     sizes = []
     for i, key in enumerate(['recipient_line_1_pt', 'recipient_line_2_pt'][:len(names)]):

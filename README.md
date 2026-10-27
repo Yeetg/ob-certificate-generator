@@ -36,6 +36,6 @@ SPEC.md      full typography spec, fixed wording, approved examples and gotchas
 | event_en | English line(s) after "In Sincere Appreciation of Your Invaluable". `\|` forces a line break |
 | cn_line_1 / en_line_1 | Optional overrides of the fixed first lines |
 | file_name | Optional output file name, without extension |
-| recipient_font | Optional font file in `Fonts/` for this row only. Blank = Cinzel Medium. The previous font, `Brush Script.ttf`, is kept for reference |
+| recipient_font | Optional font file in `Fonts/` for this row only. Blank = Cinzel SemiBold. Previous fonts `Cinzel-Medium.ttf` and `Brush Script.ttf` are kept for reference |
 
 See [SPEC.md](SPEC.md) for everything else.
